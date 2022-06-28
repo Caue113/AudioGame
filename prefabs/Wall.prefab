@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1321170625216620746}
   - component: {fileID: 1073615909166927502}
-  - component: {fileID: 603536768110419542}
+  - component: {fileID: 3511778824035979617}
   m_Layer: 0
   m_Name: Sound2
   m_TagString: Untagged
@@ -128,7 +128,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &603536768110419542
+--- !u!114 &3511778824035979617
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5930992900735512421}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50c9d9d815eaf9d4485a77fc520ebe7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 38bed74a316ba254eaaffb54c80f57c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BoundBlock: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8195357813255552620}
   - component: {fileID: 8195357813255552622}
-  - component: {fileID: 4200193581943996855}
+  - component: {fileID: 2731988707918368837}
   m_Layer: 0
   m_Name: Sound
   m_TagString: Untagged
@@ -293,7 +293,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4200193581943996855
+--- !u!114 &2731988707918368837
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8195357813255552611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50c9d9d815eaf9d4485a77fc520ebe7e, type: 3}
+  m_Script: {fileID: 11500000, guid: 38bed74a316ba254eaaffb54c80f57c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BoundBlock: {fileID: 0}
@@ -384,7 +384,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 464645625
-  m_SortingLayer: 0
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
