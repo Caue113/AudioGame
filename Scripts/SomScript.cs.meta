@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Scripts/UI_MenuNav.cs.meta
+guid: 38bed74a316ba254eaaffb54c80f57c3
+========
+guid: 50c9d9d815eaf9d4485a77fc520ebe7e
+>>>>>>>> 568748d2877ae8df1767baf81b302a9027dc6abc:Scripts/SomScript.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
