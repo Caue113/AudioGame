@@ -1,23 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
 
     [SerializeField]
-    GameObject _StartPosition;
+    Transform StartPosition;
 
     Rigidbody2D rb;
     AudioSource audioSource;
+    [SerializeField] AudioClip shock;
 
     Vector2 playerPosition;
-    [SerializeField] float playerSpeedX, playerSpeedY;
+    [SerializeField] float playerSpeed;
    
     void Start()
     {
         rb = transform.GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
+        StartPosition = GameObject.Find("StartPosition").transform;
     }
 
     // Update is called once per frame
@@ -32,56 +35,43 @@ public class Player : MonoBehaviour
     }
 
 
-
-
-
-
-
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.CompareTag("Objective"))
+        if (collision.gameObject.CompareTag("Objective"))
         {
-            Debug.Log("Reached Objective");
-        }
+            if (SceneManager.GetActiveScene().name == "Fase 1")
+            {
+                SceneManager.LoadScene("Fase 2");
+            }
+            else
+            {
+                SceneManager.LoadScene("Fase 1"); // muda pra outra coisa se atakfelg
 
-        if (collision.collider.CompareTag("Wall"))
+            }
+        }
+        if (collision.gameObject.CompareTag("Wall"))
         {
-            transform.position = _StartPosition.transform.position;
-            Debug.Log("Player touched a wall");
+            Debug.Log("moreu");
+            isKilled();
         }
     }
 
-
-
-
-
-
     void InputMovementCheck() 
     {
-        if (Input.GetAxisRaw("Horizontal") == 1)
-        {
-            transform.position += new Vector3(playerSpeedX * Time.deltaTime, 0, 0);
-        }
-        else if (Input.GetAxisRaw("Horizontal") == -1)
-        {
-            transform.position -= new Vector3(playerSpeedX * Time.deltaTime, 0, 0);
-        };
-
-        if (Input.GetAxisRaw("Vertical") == 1)
-        {
-            transform.position += new Vector3(0, playerSpeedY * Time.deltaTime, 0);
-
-        }
-        else if (Input.GetAxisRaw("Vertical") == -1)
-        {
-            transform.position -= new Vector3(0, playerSpeedY * Time.deltaTime, 0);
-        };
+        rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * playerSpeed, Input.GetAxisRaw("Vertical") * playerSpeed);
     }
 
 
     Collider2D GetGroundCollisionWithRay() 
     {
        return Physics2D.Linecast(transform.position, transform.position + new Vector3(0, 0, 2)).collider;
+    }
+
+    public void isKilled()
+    {
+        rb.transform.position = StartPosition.transform.position;
+        audioSource.clip = shock;
+        audioSource.Play();
     }
 
 
