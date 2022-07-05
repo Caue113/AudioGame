@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UI_MenuNav : MonoBehaviour
 {   
@@ -21,14 +22,38 @@ public class UI_MenuNav : MonoBehaviour
 
     Slider sldVolume;
 
-    public static float GameVolume;
+    [SerializeField]
+    public AudioClip[] menuAudioClip, gameAudioClip;
+    public AudioSource audioSource;
 
+    public static float GameVolume = 0.8f;
     bool isFocusOnMenu = false;
 
+    bool activeCamera = true;
 
-    void Start()
+
+    /*
+     * YET TO IMPLEMENT!!
+     * 
+    enum MenuAudioClips 
     {
-        //Define menus
+        AlterarVolume,
+        ContinuarAoJogo,
+        IrParaConfiguracoes,
+        MexaSetinhaBaixo,
+        MexaSetinhaCima,
+        PressioneEsc,
+        SairDoJogo,
+        VoceEstaEmAlterarVolume,
+        VoceEstaEmConfiguracoes,
+        VoceEstaEmMenu,
+        VoltarParaMenu
+    }
+    */
+
+    protected virtual void Start()
+    {
+        //Define menu-canvases
         Menu = CanvasList[0];
         Configuracoes = CanvasList[1];
         AlterarVolume = CanvasList[2];
@@ -45,12 +70,14 @@ public class UI_MenuNav : MonoBehaviour
         //Define AlterarVolume - Sliders
         sldVolume = AlterarVolumeList[0];
 
-
         UnloadAllCanvas();
+
+
+        //Define AudioSource (in player)
+        audioSource = GameObject.Find("Player").GetComponent<AudioSource>();
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         KeyboardListener();
@@ -60,12 +87,19 @@ public class UI_MenuNav : MonoBehaviour
     {     
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Pressed ESC");
             isFocusOnMenu = !isFocusOnMenu; //Invert between true/false        
 
             ToggleBetweenGameAndMenu();
         };
+
+        if (Input.GetKeyDown(KeyCode.C)) 
+        {
+            activeCamera = !activeCamera;
+            GameManager.playerCamera.gameObject.SetActive(activeCamera);
+        }
+
     }
+    
 
     public void ToggleBetweenGameAndMenu() 
     {
@@ -77,13 +111,15 @@ public class UI_MenuNav : MonoBehaviour
         else
         {
             GameLoad();
+            UnloadAllCanvas();
         }
     }
     void UnloadAllCanvas()
     {
-        foreach (var Canvas in CanvasList)
+        foreach (var canvas in CanvasList)
         {
-            Canvas.enabled = false;
+            canvas.gameObject.SetActive(false);
+            canvas.enabled = false;
         }
     }
 
@@ -98,24 +134,47 @@ public class UI_MenuNav : MonoBehaviour
     {
         UnloadAllCanvas();
 
+        //Load current Canvas
         Menu.enabled = true;
+        Menu.gameObject.SetActive(true);
+
+        //Play Audio when entering
+        audioSource.clip = menuAudioClip[9];
+        audioSource.Play();
+
         btnContinuar.Select();
+       
     }
     public void ConfiguracoesLoad() 
     {
         UnloadAllCanvas();
 
+        //Load current Canvas
         Configuracoes.enabled = true;
+        Configuracoes.gameObject.SetActive(true);
+
+        //Play Audio when entering
+        audioSource.clip = menuAudioClip[8];
+        audioSource.Play();
+
         btnAlterarVolume.Select();
     }
     public void AlterarVolumeLoad() 
     {
         UnloadAllCanvas();
+
+        //Load current Canvas
         AlterarVolume.enabled = true;
+        AlterarVolume.gameObject.SetActive(true);
+
+        //Play Audio when entering
+        audioSource.clip = menuAudioClip[7];
+        audioSource.Play();
+
 
         sldVolume.Select();
     }
-
+    
     
 
     #region NavegacaoComBotoes
@@ -124,6 +183,7 @@ public class UI_MenuNav : MonoBehaviour
     public void UpdateGameVolume() 
     {
         GameVolume = sldVolume.value;
+
     }
 
     public void SairDoJogo() 

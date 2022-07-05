@@ -14,6 +14,8 @@ public class SomScript : MonoBehaviour
     public float CurrentPosX;
     public float CurrentPosY;
 
+    AudioSource audioSource;
+
     void Start()
     {
         XLim = new float[2];
@@ -26,11 +28,13 @@ public class SomScript : MonoBehaviour
         YLim[0] = BoundBlock.transform.position.y - BoundBlock.transform.localScale.y / 2;
         YLim[1] = BoundBlock.transform.position.y + BoundBlock.transform.localScale.y / 2;
 
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        //Update Global volume (of walls only)
+        audioSource.volume = UI_MenuNav.GameVolume;
 
         PlayerPos = GameObject.Find("Player").transform;
 

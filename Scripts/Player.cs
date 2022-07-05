@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    GameManager gameManager;
 
     [SerializeField]
     Transform StartPosition;
@@ -15,9 +16,13 @@ public class Player : MonoBehaviour
 
     Vector2 playerPosition;
     [SerializeField] float playerSpeed;
+
+    public int lifes = 3;
    
     void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
         rb = transform.GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         StartPosition = GameObject.Find("StartPosition").transform;
@@ -39,20 +44,12 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Objective"))
         {
-            if (SceneManager.GetActiveScene().name == "Fase 1")
-            {
-                SceneManager.LoadScene("Fase 2");
-            }
-            else
-            {
-                SceneManager.LoadScene("Fase 1"); // muda pra outra coisa se atakfelg
-
-            }
+            GameManager.LoadNextLevel();
         }
         if (collision.gameObject.CompareTag("Wall"))
         {
             Debug.Log("moreu");
-            isKilled();
+            KillPlayer();
         }
     }
 
@@ -67,12 +64,23 @@ public class Player : MonoBehaviour
        return Physics2D.Linecast(transform.position, transform.position + new Vector3(0, 0, 2)).collider;
     }
 
-    public void isKilled()
+    public void KillPlayer()
     {
+        //Return player to spawn
         rb.transform.position = StartPosition.transform.position;
+
+        //Play Shocked SFX
         audioSource.clip = shock;
         audioSource.Play();
+
+        //Remove 1 life
+        lifes--;
+
+        //Play Current Situation
+        gameManager.PlayGameStatusAudio();
     }
+
+
 
 
     /* 
